@@ -1,0 +1,298 @@
+﻿
+@{
+    Layout = "~/Views/Shared/_Layout1.cshtml";
+  }
+
+<style>
+    .aa-browse-btn {
+        display: inline-block;
+        font-size: 16px;
+        padding: 12px 18px;
+        color: #a94442;
+    }
+
+    .carousel {
+        position: relative;
+        width: 93.5%; /* reduce width to 90% */
+        height: 100vh; /* reduce height to 90vh */
+        overflow: hidden;
+        padding: 3%; /* add padding */
+        margin: auto; /* center the carousel */
+    }
+
+    .carousel-image {
+        position: absolute;
+        top: 5px;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-size: cover;
+        background-position: center;
+        transition: opacity 0s;
+        opacity: 0;
+    }
+
+        .carousel-image.active {
+            opacity: 1;
+        }
+
+    .carousel-button {
+        position: absolute;
+        top: 50%;
+        background: #fff;
+        border: none;
+        padding: 10px;
+        cursor: pointer;
+    }
+
+    .carousel-button.previous {
+         left: 10px;
+    }
+
+    .carousel-button.next {
+         right: 10px;
+    }
+
+
+
+
+
+</style>
+
+<!-- Start slider -->
+<section id="aa-slider">
+    <div class="aa-slider-area">
+        <div id="sequence" class="seq">
+            <div class="seq-screen">
+
+
+
+                <div class="carousel">
+                    <div class="carousel-image active" style="background-image: url('https://imgscf.slidemembers.com/docs/1/1/279/fresh_mart_organic_fresh_food_farm_store_278447.jpg'); "></div>
+                    <div class="carousel-image active" style="background-image: url('https://organicsmantra.in/img/home-slider-02.jpg'); "></div>
+                    <div class="carousel-image active" style="background-image: url('https://wallpaperbat.com/img/774807-fruits-and-vegetables-wallpaper-top-free-fruits-and-vegetables-background.jpg'); "></div>
+                    <div class="carousel-image" style="background-image: url('https://images5.alphacoders.com/134/thumb-1920-1348056.jpeg'); "></div>
+                    <div class="carousel-image" style="background-image: url('https://images7.alphacoders.com/350/350842.jpg');"></div>
+                    <div class="carousel-image" style="background-image: url('https://vaaradhifarms.com/cdn/shop/files/midjourneyexpert_white_indian_desi_cow_standing_next_to_a_small_26e9dd34-2704-41bc-8611-96d3fc2fd338.png?v=1690866620&width=1440');"></div>
+                    <button class="carousel-button previous"><</button>
+                    <button class="carousel-button next">></button>
+                </div>
+
+                <script>
+
+                    var images = Array.from(document.querySelectorAll('.carousel-image'));
+                    var currentImage = 0;
+
+                    function carousel(next = true) {
+                        images[currentImage].classList.remove('active');
+                        currentImage = (currentImage + (next ? 1 : images.length - 1)) % images.length;
+                        images[currentImage].classList.add('active');
+                    }
+
+                    document.querySelector('.carousel-button.previous').addEventListener('click', function () {
+                        clearInterval(interval); // Stop the automatic slideshow
+                        carousel(false);
+                        interval = setInterval(carousel, 3000); // Restart the automatic slideshow
+                    });
+
+                    document.querySelector('.carousel-button.next').addEventListener('click', function () {
+                        clearInterval(interval); // Stop the automatic slideshow
+                        carousel();
+                        interval = setInterval(carousel, 3000); // Restart the automatic slideshow
+                    });
+
+                    var interval = setInterval(carousel, 3000); // Change image every 3 seconds
+                </script>
+
+                
+
+            </div>
+        </div>
+    </div>
+</section>
+<!-- / slider -->
+<!-- Start Promo section -->
+<section id="aa-promo">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="aa-promo-area">
+                    <div class="row">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- / Promo section -->
+<!-- Products section -->
+<section id="aa-product">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="row">
+                    <div class="aa-product-area">
+                        <div class="aa-product-inner">
+                            <!-- start prduct navigation -->
+                            <ul class="nav nav-tabs aa-products-tab">
+                                <li class="active"><a href="#vegitable" data-toggle="tab">Vegitables</a></li>
+                                <li><a href="#fruit" data-toggle="tab">Fruits</a></li>
+                                <li><a href="#dairy" data-toggle="tab">Dairy Products</a></li>
+                                <li><a href="#pickle" data-toggle="tab">Pickles</a></li>
+                            </ul>
+                            <!-- Tab panes -->
+                            <div class="tab-content">
+                                <!-- Start vegitable product category -->
+                                <div class="tab-pane fade in active" id="vegitable">
+                                    <ul class="aa-product-catg">
+                                        <!-- start single product item -->
+                                        @foreach (var item in (List<MyEcommerceAdmin.Models.Product>)@ViewBag.VegProduct)
+                                        {
+                                            { Html.RenderPartial("_Product", item); }
+                                        }
+                                        <!-- end start single product item -->
+
+                                    </ul>
+                                </div>
+
+                                <!-- start fruit product category -->
+                                <div class="tab-pane fade" id="fruit">
+                                    <ul class="aa-product-catg">
+                                        <!-- start single product item -->
+                                        @foreach (var item in (List<MyEcommerceAdmin.Models.Product>)@ViewBag.FruitProduct)
+                                        {
+                                            { Html.RenderPartial("_Product", item); }
+                                        }
+                                        <!-- end start single product item -->
+
+                                    </ul>
+                                </div>
+
+                                <!-- start dairy product category -->
+                                <div class="tab-pane fade" id="dairy">
+                                    <ul class="aa-product-catg">
+                                        <!-- start single product item -->
+                                        @foreach (var item in (List<MyEcommerceAdmin.Models.Product>)@ViewBag.DairyProduct)
+                                        {
+                                            { Html.RenderPartial("_Product", item); }
+                                        }
+                                        <!-- end start single product item -->
+
+                                    </ul>
+
+                                </div>
+
+                                <!-- start pickle product category -->
+                                <div class="tab-pane fade" id="pickle">
+                                    <ul class="aa-product-catg">
+                                        <!-- start single product item -->
+                                        @foreach (var item in (List<MyEcommerceAdmin.Models.Product>)@ViewBag.PickProduct)
+                                        {
+                                            { Html.RenderPartial("_Product", item); }
+                                        }
+                                        <!-- end start single product item -->
+
+                                    </ul>
+
+                                </div>
+                                <!-- / pickle product category -->
+
+                                <h4 class="text-center"> "Explore our AgriTech project, a cutting-edge application that delivers personalized crop recommendations for diverse regions. 
+                                It optimizes outcomes by analyzing six crucial soil attributes." <br>
+                                <span class="fa fa-long-arrow-down"></span> <br />
+                                <button class="bg-success"><a class="aa-browse-btn" href="https://mvk24.github.io/AGRI-TECH/">Agri-Tech </a></button>
+
+                                </h4>
+                                <br />
+
+                            </div>
+                            
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- / Products section -->
+<!-- banner section -->
+<section id="aa-banner">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="row">
+                    <div class="aa-banner-area">
+                        <a href="#"><img src="~/Content/img/home-banner.png" alt="home banner img"></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- popular section -->
+<section id="aa-popular-category">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="row">
+                    <div class="aa-popular-category-area">
+                        <!-- start prduct navigation -->
+                        <ul class="nav nav-tabs aa-products-tab">
+                            <li class="active"><a href="#popular" data-toggle="tab">Popular</a></li>
+                            <li><a href="#featured" data-toggle="tab">Featured</a></li>
+                            <li><a href="#latest" data-toggle="tab">Latest</a></li>
+                        </ul>
+                        <!-- Tab panes -->
+                        <div class="tab-content">
+                            <!-- Start men popular category -->
+                            <div class="tab-pane fade in active" id="popular">
+                                <ul class="aa-product-catg aa-popular-slider">
+                                    <!-- start single product item -->
+                                    @foreach (var item in (List<MyEcommerceAdmin.Models.Product>)@ViewBag.VegProduct)
+                                    {
+                                        { Html.RenderPartial("_Product", item); }
+                                    }
+                                    <!-- end start single product item -->
+
+                                </ul>
+                                <a class="aa-browse-btn" href="#">Browse all Product <span class="fa fa-long-arrow-right"></span></a>
+                            </div>
+                            <!-- / popular product category -->
+
+                            <!-- start featured product category -->
+                            <div class="tab-pane fade" id="featured">
+                                <ul class="aa-product-catg aa-featured-slider">
+                                    <!-- start single product item -->
+                                    @foreach (var item in (List<MyEcommerceAdmin.Models.Product>)@ViewBag.FruitProduct)
+                                    {
+                                        { Html.RenderPartial("_Product", item); }
+                                    }
+                                    <!-- end start single product item -->
+
+                                </ul>
+                                <a class="aa-browse-btn" href="#">Browse all Product <span class="fa fa-long-arrow-right"></span></a>
+                            </div>
+                            <!-- / featured product category -->
+
+                            <!-- start latest product category -->
+                            <div class="tab-pane fade" id="latest">
+                                <ul class="aa-product-catg aa-latest-slider">
+                                    <!-- start single product item -->
+                                    @foreach (var item in (List<MyEcommerceAdmin.Models.Product>)@ViewBag.PickProduct)
+                                    {
+                                        { Html.RenderPartial("_Product", item); }
+                                    }
+                                    <!-- end start single product item -->
+
+                                </ul>
+                                <a class="aa-browse-btn" href="#">Browse all Product <span class="fa fa-long-arrow-right"></span></a>
+                            </div>
+                            <!-- / latest product category -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- / popular section -->
